@@ -1,0 +1,38 @@
+{% extends 'admin/base.html' %}
+
+{% block header %}
+<link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet"/>
+
+{% endblock%}
+
+
+{% block body %}
+<h1 class="text-center text-danger">Nhập sách</h1>
+
+<table class="table">
+    <tr>
+        <th>Mã sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>Đơn giá</th>
+        <th>Số lượng</th>
+        <th></th>
+    </tr>
+    {% for c in session['cart'].values() %}
+    <tr id="product{{ c.id }}">
+        <td>{{ c.id }}</td>
+        <td>{{ c.name }}</td>
+        <td>{{ c.price }}</td>
+        <td>
+            <div class="form-group">
+                <input type="number" min="1" value="{{ c.quantity }}" class="form-control"
+                       onblur="updateCart({{ c.id }}, this)"/>
+            </div>
+        </td>
+        <td>
+            <input type="button" value="thêm" onclick="deleteCart({{ c.id }})" class="btn btn-danger"/>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
